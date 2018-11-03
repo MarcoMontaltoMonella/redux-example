@@ -18,5 +18,3 @@ const store = createStore(
 );
 
 export default store;
-
-// Video continue from 53:15! 

@@ -9,6 +9,13 @@ class Posts extends Component {
         this.props.fetchPosts();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.newPost){
+            // push() appends at the end, unshift() at the begin
+            this.props.posts.unshift(nextProps.newPost);
+        }
+    }
+
     render(){
         // N.B. <div> key has to be unique!
         const postItems = this.props.posts.map(post => (
@@ -28,11 +35,13 @@ class Posts extends Component {
 
 Posts.PropTypes = {
     fetchPosts: PropTypes.func.isRequired,
-    posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    newPost: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-    posts: state.posts.items // same name as in postReducer.js
+    posts: state.posts.items, // same name as in postReducer.js
+    newPost: state.posts.item
 });
 
 export default connect(mapStateToProps, { fetchPosts })(Posts);
